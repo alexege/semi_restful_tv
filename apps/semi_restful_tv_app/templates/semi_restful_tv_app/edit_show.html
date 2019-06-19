@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'semi_restful_tv_app/css/style.css' %}">
+    <title>Edit Show</title>
+</head>
+<body>
+    <a href="/" class="go_back">Go Back</a>
+    <h1>Edit Show {{show.id}}</h1>
+    <form action="/shows/{{show.id}}/update" method="POST">
+        {% csrf_token %}
+        <table>
+            <tr>
+                <td>Title</td>
+            </tr>
+            <tr>
+                <td colspan=2>
+                    <input name="title" type="text" value="{{show.title}}">
+                </td>
+            </tr>
+            <tr>
+                <td>Network</td>
+                <td>Release Date</td>
+            </tr>
+            <tr>
+                <td>
+                    <input name="network" type="text" value="{{show.network}}">
+                </td>
+                <td>
+                    <input name="release_date" type="date" value="{{show.release_date}}">
+                </td>
+                <td>
+                    <a href="#">[*]</a>
+                </td>
+            </tr>
+            <tr>
+                <td>Description:</td>
+            </tr>
+            <tr>
+                <td colspan=2>
+                    <textarea name="description">{{show.description}}</textarea>
+                </td>
+            </tr>
+            <tr>
+                <td colspan=3>
+                    <button>Update(/shows/id/update)</button>
+                </td>
+            </tr>
+        </table>
+        <input name="show_id" type="hidden" value="{{show.id}}">
+    </form>
+</body>
+</html>

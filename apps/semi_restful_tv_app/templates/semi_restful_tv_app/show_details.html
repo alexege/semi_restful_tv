@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'semi_restful_tv_app/css/style.css' %}">
+    <title>New Show Description</title>
+</head>
+<body>
+    <a href="/" class="go_back">Go Back</a>
+    <h1>TV Show: {{new_show.id}}</h1>
+    <p>Title: {{new_show.title}}</p>
+    <p>Network: {{new_show.network}}</p>
+    <p>Release Date: {{new_show.release_date}}</p>
+    <p>Description: {{new_show.description}}</p>
+    <!-- <p>Last Update: {{new_show.updated_at}}</p> -->
+
+    <a href="/shows/{{show.id}}/edit">Edit</a> | <a href="/shows/{{show.id}}/delete">Delete</a>
+</body>
+</html>

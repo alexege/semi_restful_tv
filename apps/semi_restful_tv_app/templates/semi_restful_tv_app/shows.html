@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'semi_restful_tv_app/css/style.css' %}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <title>Shows</title>
+</head>
+<body>
+    <h1>All Shows</h1>
+    <form>
+        <table class="table table-striped">
+            <thead class="thead thead-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Title</th>
+                    <th>Network</th>
+                    <th>Release Date</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            {% for show in all_shows %}
+            <tr>
+                <td>{{show.id}}</td>
+                <td>{{show.title}}</td>
+                <td>{{show.network}}</td>
+                <td>{{show.release_date}}</td>
+                <td>
+                    <a href="/shows/{{show.id}}">Show(/shows/id)</a> | <a href="/shows/{{show.id}}/edit">Edit(/shows/id/edit)</a> | <a href="/shows/{{show.id}}/delete">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </form>
+    <a href="/shows/new">Add a New Show (/shows/new)</a>
+    <br>
+    <a href="/delete">Delete Database (/delete)</a>
+</body>
+</html>
