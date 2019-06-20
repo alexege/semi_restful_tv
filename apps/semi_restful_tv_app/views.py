@@ -1,6 +1,10 @@
 from django.shortcuts import render, HttpResponse, redirect
 from . import models
 
+#Validation imports
+from django.contrib import messages
+from .models import Show
+
 #Landing page - Render shows.html
 #Localhost:8000
 def index(request):
@@ -19,20 +23,28 @@ def new_shows(request):
 #Localhost:8000/shows/create - POST
 def shows_create(request):
 
-    #Add a new item to the database
-    models.Show.objects.create(title=request.POST['title'], network=request.POST['network'], release_date=request.POST['release_date'], description=request.POST['description'])
+    #Add validation
+    errors = Show.objects.basic_validator(request.POST)
+    print(errors)
+    if len(errors) > 0:
+        for key, value in errors.items():
+            messages.error(request, value)
+        return redirect('/')
+    else:
+        #Add a new item to the database
+        models.Show.objects.create(title=request.POST['title'], network=request.POST['network'], release_date=request.POST['release_date'], description=request.POST['description'])
 
-    #Get id of last added Show
-    id = models.Show.objects.last().id
+        #Get id of last added Show
+        id = models.Show.objects.last().id
 
-    #Print newly added item properties to console
-    print("Added a new item to the database, with the following properties:")
-    print("title: " + request.POST['title'])
-    print("network: " + request.POST['network'])
-    print("release_date: " + request.POST['release_date'])
-    print("description: " + request.POST['description'])
+        #Print newly added item properties to console
+        print("Added a new item to the database, with the following properties:")
+        print("title: " + request.POST['title'])
+        print("network: " + request.POST['network'])
+        print("release_date: " + request.POST['release_date'])
+        print("description: " + request.POST['description'])
 
-    return redirect('/shows/' + str(id))
+        return redirect('/shows/' + str(id))
 
 #Return a tmeplate displaying the specific show's information
 #Localhost:8000/shows - GET
