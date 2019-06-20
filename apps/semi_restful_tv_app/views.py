@@ -29,7 +29,7 @@ def shows_create(request):
     if len(errors) > 0:
         for key, value in errors.items():
             messages.error(request, value)
-        return redirect('/')
+        return redirect('/shows/new')
     else:
         #Add a new item to the database
         models.Show.objects.create(title=request.POST['title'], network=request.POST['network'], release_date=request.POST['release_date'], description=request.POST['description'])
@@ -64,14 +64,22 @@ def show_id_edit(request, id):
 
 #Localhost:8000/shows/<id>/update
 def show_id_update(request, id):
-    show_to_update = models.Show.objects.get(id=id)
-    print("show to update: " , show_to_update.title)
-    show_to_update.title = request.POST['title']
-    show_to_update.network = request.POST['network']
-    show_to_update.release_date = request.POST['release_date']
-    show_to_update.description = request.POST['description']
-    show_to_update.save()
-    return redirect('/shows/' + str(id))
+
+    errors = Show.objects.basic_validator(request.POST)
+    print(errors)
+    if len(errors) > 0:
+        for key, value in errors.items():
+            messages.error(request, value)
+        return redirect('/shows/' + str(id) + '/edit')
+    else:
+        show_to_update = models.Show.objects.get(id=id)
+        print("show to update: " , show_to_update.title)
+        show_to_update.title = request.POST['title']
+        show_to_update.network = request.POST['network']
+        show_to_update.release_date = request.POST['release_date']
+        show_to_update.description = request.POST['description']
+        show_to_update.save()
+        return redirect('/shows/' + str(id))
 
 #Localhost:8000/shows/<id>/delete
 def show_id_delete(request, id):

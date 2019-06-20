@@ -48,6 +48,14 @@
                 </td>
             </tr>
         </table>
+
+        <!-- Validations -->
+        {% if messages %}
+            {% for message in messages %}
+                <p>{{message}}</p>
+            {% endfor %}
+        {% endif %}
+
         <input name="show_id" type="hidden" value="{{show.id}}">
     </form>
     <div class="footer">new_show.html</div>
